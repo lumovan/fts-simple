@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+	<Product Name='KNX Configuration Tool' Id='fbd715b9-7f4d-45fe-9a7f-1b6cd057438d' UpgradeCode='9d055869-4bd3-4212-8604-1d00bb6487c0'
+    Language='1033' Codepage='1252' Version='0.2.0' Manufacturer='Kalassi'>
+
+		<Package Id='*' Keywords='Installer' Description="Kalassi KnxCfg Installer"
+      Comments='(c) 2015 Kalassi' Manufacturer='Kalassi'
+      InstallerVersion='405' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+
+		<Media Id='1' Cabinet='knxcfg.cab' EmbedCab='yes'/>  
+
+		<Directory Id='TARGETDIR' Name='SourceDir'>
+			<Directory Id='ProgramFilesFolder' Name='PFiles'>
+				<Directory Id='Kalassi' Name='Kalassi'>
+					<Directory Id='INSTALLDIR' Name='KnxCfg-0.2'>
+						<Component Id='MainExecutable' Guid='3dd18214-71a6-4000-9827-c9353b2b025b'>
+							<File Id='knxcfggEXE' Name='knxcfg.exe' DiskId='1' Source='..\build-x86-MSVC2010-Release\release\knxcfg2.exe' KeyPath='yes'>
+								<Shortcut Id='startmenuManual' Directory='ProgramMenuDir' Name='KNX Configuration Utility' Advertise='yes' /> 
+							</File>
+						</Component>
+						<Component Id='QtDlls' Guid='327f9e3b-5902-4f72-9065-2375e36a049e'>
+							<File Id='qt5core' Name='Qt5Core.dll' DiskId='1' Source='C:\Qt\Qt5.3.2-msvc2010\5.3\msvc2010_opengl\bin\qt5core.dll'/>
+							<File Id='qt5gui' Name='Qt5Gui.dll' DiskId='1' Source='C:\Qt\Qt5.3.2-msvc2010\5.3\msvc2010_opengl\bin\qt5gui.dll'/>
+							<File Id='qt5widgets' Name='Qt5Widgets.dll' DiskId='1' Source='C:\Qt\Qt5.3.2-msvc2010\5.3\msvc2010_opengl\bin\qt5widgets.dll'/>
+							<File Id='qt5xml' Name='Qt5Xml.dll' DiskId='1' Source='C:\Qt\Qt5.3.2-msvc2010\5.3\msvc2010_opengl\bin\qt5xml.dll'/>
+							<File Id='icudt' Name='icudt52.dll' DiskId='1' Source='C:\Qt\Qt5.3.2-msvc2010\5.3\msvc2010_opengl\bin\icudt52.dll'/>
+							<File Id='icuin' Name='icuin52.dll' DiskId='1' Source='C:\Qt\Qt5.3.2-msvc2010\5.3\msvc2010_opengl\bin\icuin52.dll'/>
+							<File Id='icuuc' Name='icuuc52.dll' DiskId='1' Source='C:\Qt\Qt5.3.2-msvc2010\5.3\msvc2010_opengl\bin\icuuc52.dll'/>
+						</Component>
+						<Directory Id='QtPlatform' Name='platforms'>
+							<Component Id='QtPlatform' Guid='599d6e1d-31bc-4221-8fdc-2c534c58ef47'>
+								<File Id='qwindows' Name='qwindows.dll' DiskId='1' Source='C:\Qt\Qt5.3.2-msvc2010\5.3\msvc2010_opengl\plugins\platforms\qwindows.dll'/>
+								
+							</Component>
+						</Directory>
+<!--						<Component Id="Falcon" Guid="2517e9cf-883b-469c-9c6e-b76cedcb6523">
+							<File Id="Falcon" Name="Falcon.msi" Source="FalconRuntime_emb.msi" DiskId="1" KeyPath="yes"/>
+						</Component>
+						<Component Id="VC2010" Guid="9079cfd1-d398-4f29-864c-48378e809a73">
+							<File Id="VC2010" Name="msvcr100.dll" Source="msvcr100.dll" DiskId="1" KeyPath="yes"/>
+						</Component> -->
+
+
+					</Directory>
+				</Directory>
+			</Directory>
+			<Directory Id="ProgramMenuFolder" Name="Programs">
+				<Directory Id="ProgramMenuDir" Name="Foobar 1.0">
+					<Component Id="ProgramMenuDir" Guid="f0b96209-b9d8-46cb-a194-2f79e4127fb4">
+						<RemoveFolder Id='ProgramMenuDir' On='uninstall' />
+						<RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value='' KeyPath='yes' />
+					</Component>
+				</Directory>
+			</Directory>
+		</Directory>
+
+		<DirectoryRef Id="TARGETDIR">
+			<!--			<Merge Id="VCRedist" SourceFile="C:\Program Files (x86)\Common Files\Merge Modules\Microsoft_VC120_OpenMP_x86.msm" DiskId="1" Language="0"/>  -->
+			<Merge Id="VCRedist" SourceFile="Microsoft_VC100_OpenMP_x86.msm" DiskId="1" Language="0"/>
+		</DirectoryRef>
+
+		<Feature Id='Complete' Level='1' Title='KnxCfg 0.2' Description='Complete install' Display='expand' ConfigurableDirectory='INSTALLDIR'>
+			<ComponentRef Id='MainExecutable' />
+			<ComponentRef Id='ProgramMenuDir' />
+			<ComponentRef Id='QtDlls' />
+			<ComponentRef Id='QtPlatform' />
+			<!-- <ComponentRef Id='Falcon' />
+						<ComponentRef Id='VC2010' /> -->
+			<MergeRef Id="VCRedist"/> 
+		</Feature>
+
+		<UIRef Id="WixUI_InstallDir" />
+		<UIRef Id="WixUI_ErrorProgressText" />
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+
+		<UI>
+
+			<!-- Skip license dialog -->
+			<Publish Dialog="WelcomeDlg"
+             Control="Next"
+             Event="NewDialog"
+             Value="InstallDirDlg"
+             Order="2">1</Publish>
+			<Publish Dialog="InstallDirDlg"
+             Control="Back"
+             Event="NewDialog"
+             Value="WelcomeDlg"
+             Order="2">1</Publish>
+		</UI>
+	</Product>
+
+	<!--
+			<Feature Id='Complete' Title='Foobar 1.0' Description='The complete package.'
+      Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
+			<Feature Id='MainProgram' Title='Program' Description='The main executable.' Level='1'>
+				<ComponentRef Id='MainExecutable' />
+				<ComponentRef Id='HelperLibrary' />
+				<ComponentRef Id='ProgramMenuDir' />
+			</Feature>
+
+			<Feature Id='Documentation' Title='Description' Description='The instruction manual.' Level='1000'>
+				<ComponentRef Id='Manual' />
+			</Feature>
+		</Feature>
+-->
+	<!--
+		<Icon Id="Foobar10.exe" SourceFile="FoobarAppl10.exe" /> -->
+	<!-- -->
+
+</Wix>

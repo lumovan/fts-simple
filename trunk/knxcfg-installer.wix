@@ -1,0 +1,28 @@
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+	<Bundle Name="KNX Configuration Tool" Version="0.2.0" Manufacturer="Kalassi" UpgradeCode="a403e42d-9d28-4ca3-b286-56c48f1de70f" Copyright="(c) 2015 Kalassi" >
+        <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
+          <bal:WixStandardBootstrapperApplication
+            LicenseFile="knxcfg-license.rtf"
+            LogoFile="C:\Users\max\Dropbox\Kalassi\nashorn.png"
+            />
+        </BootstrapperApplicationRef>
+		
+		<util:RegistrySearch Root="HKLM" Key="SOFTWARE\Wow6432Node\Microsoft\VisualStudio\10.0\VC\VCRedist\x86" Value="Installed" Variable="VC10_Wow" />
+		<util:RegistrySearch Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\10.0\VC\VCRedist\x86" Value="Installed" Variable="VC10" />
+		<util:RegistrySearch Root="HKLM" Key="SOFTWARE\Classes\EIBA.Interop.Falcon.ConnectionObjectFactory\CLSID" Variable="Falcon" />
+		<Chain>
+			<ExePackage Id="MSVC" Name="Microsoft Visual C++ 2010 x86 Runtime" Cache="no" Compressed="yes" PerMachine="yes" Permanent="yes" Vital="yes" InstallCommand="/q"
+         SourceFile="vcredist_x86.exe"
+         DetectCondition="(VC10_Wow = &quot;1&quot;) OR (VC10 = &quot;1&quot;)" />
+
+			<MsiPackage Id="Falcon" Name="EIBA Falcon Driver" Cache="no" Compressed="yes" Permanent="yes" Vital="yes" 
+        SourceFile="FalconRuntime_emb.msi"
+        InstallCondition="Falcon&lt;&gt;&quot;{FAB1BBDB-6FDB-36B7-955B-71C15EB3B917}&quot;" />
+
+			<RollbackBoundary />
+
+			<MsiPackage Id="KnxCfg" SourceFile="knxcfg-program.msi" DisplayInternalUI="yes" Compressed="yes" Vital="yes" />
+		</Chain>
+
+	</Bundle>
+</Wix>
