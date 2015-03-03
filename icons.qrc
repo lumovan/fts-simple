@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/kalassi">
+        <file>gui/load.png</file>
+        <file>gui/connect.png</file>
+        <file>gui/kalassi.jpg</file>
+        <file>gui/save.png</file>
+        <file>gui/saveas.png</file>
+    </qresource>
+</RCC>

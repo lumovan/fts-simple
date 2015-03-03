@@ -1,0 +1,127 @@
+#ifndef PROPERTYDATATYPE_H
+#define PROPERTYDATATYPE_H
+
+#include <stdint.h>
+
+#ifndef USE_FALCON_IF
+enum EibPropertyDataType
+    {	PT_CONTROL	= 0,
+    PT_CHAR	= 1,
+    PT_UNSIGNED_CHAR	= 2,
+    PT_INT	= 3,
+    PT_UNSIGNED_INT	= 4,
+    PT_EIB_FLOAT	= 5,
+    PT_DATE	= 6,
+    PT_TIME	= 7,
+    PT_LONG	= 8,
+    PT_UNSIGNED_LONG	= 9,
+    PT_FLOAT	= 10,
+    PT_DOUBLE	= 11,
+    PT_CHAR_BLOCK	= 12,
+    PT_POLL_GROUP_SETTINGS	= 13,
+    PT_SHORT_CHAR_BLOCK	= 14,
+    PT_DATE_TIME	= 15,
+    PT_VARIABLE_LENGTH	= 16,
+    PT_GENERIC_01	= 17,
+    PT_GENERIC_02	= 18,
+    PT_GENERIC_03	= 19,
+    PT_GENERIC_04	= 20,
+    PT_GENERIC_05	= 21,
+    PT_GENERIC_06	= 22,
+    PT_GENERIC_07	= 23,
+    PT_GENERIC_08	= 24,
+    PT_GENERIC_09	= 25,
+    PT_GENERIC_10	= 26,
+    PT_GENERIC_11	= 27,
+    PT_GENERIC_12	= 28,
+    PT_GENERIC_13	= 29,
+    PT_GENERIC_14	= 30,
+    PT_GENERIC_15	= 31,
+    PT_GENERIC_16	= 32,
+    PT_GENERIC_17	= 33,
+    PT_GENERIC_18	= 34,
+    PT_GENERIC_19	= 35,
+    PT_GENERIC_20	= 36,
+    PT_RESERVED_25	= 37,
+    PT_RESERVED_26	= 38,
+    PT_RESERVED_27	= 39,
+    PT_RESERVED_28	= 40,
+    PT_RESERVED_29	= 41,
+    PT_RESERVED_2A	= 42,
+    PT_RESERVED_2B	= 43,
+    PT_RESERVED_2C	= 44,
+    PT_RESERVED_2D	= 45,
+    PT_RESERVED_2E	= 46,
+    PT_RESERVED_2F	= 47,
+    PT_VERSION	= 48,
+    PT_ALARM_INFO	= 49,
+    PT_BINARY_INFORMATION	= 50,
+    PT_BITSET8	= 51,
+    PT_BITSET16	= 52,
+    PT_ENUM8	= 53,
+    PT_SCALING	= 54,
+    PT_RESERVED_37	= 55,
+    PT_RESERVED_38	= 56,
+    PT_RESERVED_39	= 57,
+    PT_RESERVED_3A	= 58,
+    PT_RESERVED_3B	= 59,
+    PT_NE_VL	= 60,
+    PT_NE_FL	= 61,
+    PT_FUNCTION	= 62,
+    PT_ESCAPE	= 63,
+    PT_UNDEFINED	= -1
+    } ;
+typedef enum EibPropertyDataType EibPropertyDataType_t;
+#else
+#include <FalconInterfaceDefines.h>
+#endif
+
+typedef struct {
+    EibPropertyDataType_t pdt;
+    uint8_t len;
+} PDTLen_t;
+
+static const PDTLen_t pdtLengths[] = {
+    {PT_CONTROL, 1},
+    {PT_CHAR, 1},
+    {PT_UNSIGNED_CHAR, 1},
+    {PT_INT, 2},
+    {PT_UNSIGNED_INT, 2},
+    {PT_EIB_FLOAT, 2},
+    {PT_DATE, 3},
+    {PT_TIME, 3},
+    {PT_LONG, 4},
+    {PT_UNSIGNED_LONG, 4},
+    {PT_FLOAT, 4},
+    {PT_DOUBLE, 8},
+    {PT_CHAR_BLOCK, 10},
+    {PT_POLL_GROUP_SETTINGS, 3},
+    {PT_SHORT_CHAR_BLOCK, 5},
+    {PT_GENERIC_01, 1},
+    {PT_GENERIC_02, 2},
+    {PT_GENERIC_03, 3},
+    {PT_GENERIC_04, 4},
+    {PT_GENERIC_05, 5},
+    {PT_GENERIC_06, 6},
+    {PT_GENERIC_07, 7},
+    {PT_GENERIC_08, 8},
+    {PT_GENERIC_09, 9},
+    {PT_GENERIC_10, 10},
+    {PT_GENERIC_11, 11},
+    {PT_GENERIC_12, 12},
+    {PT_GENERIC_13, 13},
+    {PT_GENERIC_14, 14},
+    {PT_GENERIC_15, 15},
+    {PT_GENERIC_16, 16},
+    {PT_GENERIC_17, 17},
+    {PT_GENERIC_18, 18},
+    {PT_GENERIC_19, 19},
+    {PT_GENERIC_20, 20},
+    {PT_ALARM_INFO, 1},
+    {PT_BINARY_INFORMATION, 1},
+    {PT_BITSET8, 8},
+    {PT_BITSET16, 16},
+    {PT_ENUM8, 1}
+};
+
+#endif // PROPERTYDATATYPE_H
